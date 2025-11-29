@@ -127,7 +127,17 @@ const GameList = () => {
 
                 const fetchPromises = batch.map(async (gameName) => {
                     const cleanName = cleanGameName(gameName);
-                    if (!cleanName) return null;
+                    const fallbackImage = 'https://www.memeatlas.com/images/pepes/pepe-board-nailed-to-head.png';
+
+                    if (!cleanName) {
+                        return {
+                            gameName: gameName,
+                            metadata: {
+                                image: fallbackImage,
+                                id: null
+                            }
+                        };
+                    }
 
                     try {
                         const timeoutPromise = new Promise((_, reject) =>
@@ -147,6 +157,14 @@ const GameList = () => {
                                     id: data.items[0].id
                                 }
                             };
+                        } else {
+                            return {
+                                gameName: gameName,
+                                metadata: {
+                                    image: fallbackImage,
+                                    id: null
+                                }
+                            };
                         }
                     } catch (err) {
                         if (err.message === 'timeout') {
@@ -157,12 +175,11 @@ const GameList = () => {
                         return {
                             gameName: gameName,
                             metadata: {
-                                image: 'https://www.memeatlas.com/images/pepes/pepe-board-nailed-to-head.png',
+                                image: fallbackImage,
                                 id: null
                             }
                         };
                     }
-                    return null;
                 });
 
                 const results = await Promise.all(fetchPromises);
