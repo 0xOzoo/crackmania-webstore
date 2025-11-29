@@ -2,6 +2,10 @@
 
 A modern web application for browsing and managing a game library with automatic Steam cover art integration.
 
+## 🚀 Live Demo
+
+**[View Live Demo](https://crackmania-webstore.vercel.app/)**
+
 ## Features
 
 - 🎮 **Game Library Browser** - Browse games with a beautiful grid layout
